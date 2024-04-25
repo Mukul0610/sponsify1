@@ -18,10 +18,8 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ variables: { colorWarning: '#1a1a1a' } }}>
       <html lang="en">
-
         <body className={inter.className}>
           <main className="max-w-10xl mx-auto">
-
             {children}
           </main>
         </body>
