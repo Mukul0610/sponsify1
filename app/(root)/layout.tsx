@@ -1,18 +1,21 @@
+import MobileNav from '@/components/shared/MobileNav';
+import Sidebar from '@/components/shared/Sidebar';
 import React from 'react'
 
-const layout = ({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>)=> {
+const Layout = ({ children}:Readonly<{
+  children: React.ReactNode;
+}>) => {
   return (
     <main className='root'>
-      <div>
-        <p>home</p>
-      {children}
-      </div>
+      <Sidebar/>
+      <MobileNav/>
+        <div className="root-container">
+        <div className="wrapper">
+            {children}
+            </div>
+            </div>
     </main>
   )
 }
 
-export default layout
+export default Layout
