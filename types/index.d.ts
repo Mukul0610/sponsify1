@@ -18,22 +18,16 @@ declare type CreateUserParams = {
   };
   
   // ====== IMAGE PARAMS
-  declare type AddImageParams = {
-    image: {
-      title: string;
-      publicId: string;
-      transformationType: string;
-      width: number;
-      height: number;
-      config: any;
-      secureURL: string;
-      transformationURL: string;
-      aspectRatio: string | undefined;
-      prompt: string | undefined;
-      color: string | undefined;
-    };
+  declare type UpdateInstaPageParams = {
     userId: string;
-    path: string;
+    pageUserName: string;
+    full_name: string,
+    followers: number,
+    following: number,
+    media_count: number,
+    bio: string,
+    average_views:number,
+    profile_pic_url:string
   };
   
   declare type UpdateImageParams = {

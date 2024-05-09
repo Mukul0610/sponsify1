@@ -25,7 +25,7 @@ const Sidebar = () => {
                                 {navLinks.map((link) => {
                                     const isActive = link.route === pathname
                                     return (
-                                        <li key={link.route} className={`sidebar-nav_element group ${isActive ? ' bg-gray-400 ' : 'text-gray-700'
+                                        <li key={link.route} className={`sidebar-nav_element group ${isActive ? ' bg-gray-500 ' : 'text-gray-700'
                                             }`}><Link className='sidebar-link' href={link.route}>
                                                 <Image src={link.icon} alt='logo' width={24} height={24} className={`${isActive && 'brightness-200'}`} />
                                                 {link.label}
@@ -33,6 +33,9 @@ const Sidebar = () => {
                                         </li>
                                     )
                                 })}
+                                <li className='flex-center cursor-pointer gap-2'>
+                                <Link href='/createcampaign' style={{ textDecoration: 'none'  }}><button className='mt-4 h-12 w-60 bg-neutral-700 text-slate-200 font-semibold text-base rounded-full   hover:bg-black hover:text-gray-100 cursor-pointer'>+ Create Campaign </button></Link>
+                                </li>
                                 <li className='flex-center cursor-pointer gap-2 p-4'>
                                     <UserButton afterSignOutUrl='/' showName/>
                                 </li>

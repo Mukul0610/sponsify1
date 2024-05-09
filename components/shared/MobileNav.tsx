@@ -37,6 +37,9 @@ const MobileNav = () => {
                         </li>
                       )
                     })}
+                    <li className='flex-center cursor-pointer'>
+                                <Link href='/createcampaign' style={{ textDecoration: 'none'  }}><button className='mt-4 h-12 w-60 bg-gray-900 text-white font-semibold text-base rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-900 hover:text-gray-100 cursor-pointer'>+ Create Campaign </button></Link>
+                                </li>
                     <li className='flex-center cursor-pointer gap-2 p-4'>
                       <UserButton afterSignOutUrl='/' showName />
                     </li>

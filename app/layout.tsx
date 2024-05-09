@@ -5,7 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ['300', '400', '500', '600', '700'] });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Sponsify",
