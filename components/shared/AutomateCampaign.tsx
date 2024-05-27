@@ -133,7 +133,7 @@ useEffect(()=>{
     <div className="flex flex-col justify-center gap-8 p-4 w-90% text-lg shadow-2xl">
     <h1 className='text-3xl flex justify-center font-extrabold mb-2 mt-2'>Campaign</h1>
       <div className="px-12">
-        <h4 className='mb-2 font-semibold'>1. What's your campaign name?</h4>
+        <h4 className='mb-2 font-semibold'>1. What your campaign name?</h4>
         <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='text' required onChange={e => setData({ ...data, campaignName: e.target.value })} value={data.campaignName} />
       </div>
       <div className='grid grid-cols-2 px-12 gap-4'>
@@ -149,7 +149,7 @@ useEffect(()=>{
       
       
       <div className="px-12 rounded-lg">
-        <h4 className='mb-2 font-semibold'>4. What's your campaign description?</h4>
+        <h4 className='mb-2 font-semibold'>4. What your campaign description?</h4>
         <textarea required onChange={e => setData({ ...data, description: e.target.value })} value={data.description} className="w-full h-32 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" />
       </div>
 
