@@ -45,7 +45,7 @@ const [data,setData]=useState({
   return (
     <div className="flex flex-col gap-5 p-4 w-96 lg:w-full text-lg shadow-md">
       <div className="p-12 rounded-lg hover:shadow-lg">
-          <h4 className='mb-5'>1. What's your campaign name?</h4>
+          <h4 className='mb-5'>1. What your campaign name?</h4>
           <input className="w-full h-10 border-2 border-gray-500 rounded-md" type='text' required onChange={e=>setData({...data,campaigns:e.target.value})} value={data.campaigns}/>
         </div>
         <div className="p-12 rounded-lg hover:shadow-lg">
@@ -57,7 +57,7 @@ const [data,setData]=useState({
           <input className="w-full h-10 border-2 border-gray-500 rounded-md" type='text' required onChange={e=>setData({...data,averageViews:e.target.value})} value={data.averageViews}/>
         </div>
         <div className="p-12 rounded-lg hover:shadow-lg">
-          <h4 className='mb-5'>4. What's your campaign description?</h4>
+          <h4 className='mb-5'>4. What your campaign description?</h4>
           <textarea required onChange={e=>setData({...data,description:e.target.value})} value={data.description} className="w-full h-32 border-2 border-gray-500 rounded-md"/>
         </div>
         <div className="p-12 rounded-lg hover:shadow-lg">
