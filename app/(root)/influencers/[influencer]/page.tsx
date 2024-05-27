@@ -1,9 +1,10 @@
+import { numToString } from '@/components/shared/funtions';
 import { getInstaPageById } from '@/lib/actions/instaPage.action';
 import Image from 'next/image';
 
 
 import React from 'react'
-const Pages = async({params}) => {
+const Pages = async({params}:any) => {
  
   const page = await getInstaPageById(params.influencer);
   
@@ -11,20 +12,20 @@ const Pages = async({params}) => {
   
   return (
     <section className="profile">
-      <div className="profile-balance">
-       <h1>{page[0].followers}</h1>
-       <div className='flex flex-col items-center mt-[-80px]'>
-            <Image src={page[0].profile_pic_url} alt="coins" width={100} height={100} className="rounded-full" />
-            <p className='mt-2 text-center font-bold"'>{page[0].pageUserName}</p>
+    <div className="profile-balance mt-9" >
+       <div className='flex flex-col items-center mt-[-120px]'>
+            <Image src={page[0].profile_pic_url} alt="coins" width={160} height={160} className="rounded-full border-8 shadow-lg shadow-neutral-800 border-neutral-700" />
+            <p className='mt-2 text-center font-semibold'>{page[0].pageUserName}</p>
             
           </div >
-          <div>
-          <p className='mt-2 text-center font-bold"'>{page[0].full_name}</p>
-            <p className='mt-2 text-center font-bold"'>{page[0].followers}</p>
-            <p className='mt-2 text-center font-bold"'>{page[0].following}</p>
-            <p className='mt-2 text-center font-bold"'>{page[0].media_count}</p>
-            <p className='mt-2 text-center font-bold"'>{page[0].bio}</p>
-            <p className='mt-2 text-center font-bold"'>{page[0].average_views}</p>
+          <div className='mt-5 grid grid-cols-3 gap-5'>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Owner Name</span><br/><span>{page[0].full_name}</span></p>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Followers</span><br/><span>{numToString(page[0].followers)}</span></p>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Followings</span><br/><span>{page[0].following}</span></p>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Average Views</span><br/><span>{numToString(page[0].average_views)}</span></p>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Media</span><br/><span>{page[0].media_count}</span></p>
+            <p className='mt-2 text-center bg-gray-100 p-4 rounded-3xl'><span className='font-extrabold'>Bio</span><br/><span>{page[0].bio}</span></p>
+           
           </div>
       </div>
     </section>

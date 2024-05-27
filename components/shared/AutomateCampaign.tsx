@@ -2,9 +2,14 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import axios from 'axios';
+import { CldUploadWidget } from 'next-cloudinary';
+import Image from 'next/image';
+import { createCampaign } from '@/lib/actions/campaign.action';
+import { NextResponse } from 'next/server';
+import { auth, getAuth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { getUserById, updateCredits } from '@/lib/actions/user.actions';
 
-import Image from 'next/image'
-import { Upload } from 'lucide-react';
 const option = [
   { value: "any", label: "Any" },
   { value: "fashion", label: "Fashion" },
@@ -30,43 +35,53 @@ const option = [
   { value: "sports", label: "Sports" }
 ];
 
-const AutomateCampaign = () => {
-  const [file, setFile] = useState(null);
-  const [uploadedFileName, setUploadedFileName] = useState(null)
+interface AutomateCampaignProps {
+  param: string;
+  credits:number // Assuming param is a string, change type as per your requirement
+}
 
+const AutomateCampaign: React.FC<AutomateCampaignProps> = ({ param ,credits})=> {
+  const handleFinalSubmit = async (e: CreateCampaignParams) => {
+    if(credits>e.creditUseForCampaign){
+    const newCampaign = await createCampaign(e)
+    const updatedCredit=credits-e.creditUseForCampaign
+    const userUpdate= await updateCredits(param,updatedCredit)
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    if (!file) {
-      alert('Please select a file');
-      return;
+    if(newCampaign){
+      setData({userId:param,
+        campaignName: '',
+        minFolower: 10000,
+        averageViews: 10000,
+        description: '',
+        preferredGender: 'Any',
+        type: 'logo',
+        price: 0,
+        day: 0,
+        biolink: '',
+        wayOfPaying: 'views',
+        thembnailImgUrl: "",
+        promotionPostUrl:"",
+        verificationImgUrl:"",
+        categories:[],
+        creditUseForCampaign:1000,
+        amountUsed:1000,
+      })
     }
-    const formData = new FormData();
-    formData.append('image', file);
 
-    try {
-      const response = await axios.post('/api/uploadapi', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      
-      // Update state with the uploaded filename
-      setUploadedFileName(response.data.filename);
-      console.log(uploadedFileName);
-      alert('File uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading file:', error);
+    return NextResponse.json({ message: "OK", newPage: createCampaign});
+    alert("Your Campaign Is Create")
     }
-  };
-
+    else{
+      alert("You don't Have credit")
+    }
+  }
   
 
 
-  //main content
   const [categories, setCategories] = useState([]);
 
   const [data, setData] = useState({
+    userId:param,
     campaignName: '',
     minFolower: 10000,
     averageViews: 10000,
@@ -76,57 +91,188 @@ const AutomateCampaign = () => {
     price: 0,
     day: 0,
     biolink: '',
-    imageURL: '',
     wayOfPaying: 'views',
+    thembnailImgUrl: "",
+    promotionPostUrl:"",
+    verificationImgUrl:"",
+    categories:[],
+    creditUseForCampaign:1000,
+    amountUsed:1000,
   })
+useEffect(()=>{
+  let arr=[]
+  
+  for (let i = 0; i < categories.length; i++) {
+    arr.push(categories[i].value);
+  }
+  setData((prevState: any) => ({
+    ...prevState,
+    categories:arr
+  })) 
+},[categories])
 
+  const onUploadSuccessThembnailImgUrlHandler = (result: any) => {
+    setData((prevState: any) => ({
+      ...prevState,
+      thembnailImgUrl: result?.info?.secure_url
+    }))
+  }
+  const onUploadSuccessPostUrlHandler = (result: any) => {
+    setData((prevState: any) => ({
+      ...prevState,
+      promotionPostUrl: result?.info?.secure_url
+    }))
+  }
+  const onUploadSuccessVerificationImgUrlHandler = (result: any) => {
+    setData((prevState: any) => ({
+      ...prevState,
+      verificationImgUrl: result?.info?.secure_url
+    }))
+  }
   return (
-    <div className="flex flex-col gap-5 p-4 w-96 lg:w-full text-lg shadow-md">
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>1. What's your campaign name?</h4>
-        <input className="w-full h-10 border-2 border-gray-500 rounded-md" type='text' required onChange={e => setData({ ...data, campaignName: e.target.value })} value={data.campaignName} />
+    <div className="flex flex-col justify-center gap-8 p-4 w-90% text-lg shadow-2xl">
+    <h1 className='text-3xl flex justify-center font-extrabold mb-2 mt-2'>Campaign</h1>
+      <div className="px-12">
+        <h4 className='mb-2 font-semibold'>1. What's your campaign name?</h4>
+        <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='text' required onChange={e => setData({ ...data, campaignName: e.target.value })} value={data.campaignName} />
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>2. Minimum followers required?</h4>
-        <input className="w-full h-10 border-2 border-gray-500 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, minFolower: e.target.value })} value={data.minFolower} />
+      <div className='grid grid-cols-2 px-12 gap-4'>
+      <div className="rounded-lg">
+        <h4 className='mb-2 font-semibold'>2. Minimum followers required?</h4>
+        <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, minFolower: e.target.value })} value={data.minFolower} />
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>3. Average views required?</h4>
-        <input className="w-full h-10 border-2 border-gray-500 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, averageViews: e.target.value })} value={data.averageViews} />
+      <div className="rounded-lg">
+        <h4 className='mb-2 font-semibold'>3. Average views required?</h4>
+        <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, averageViews: e.target.value })} value={data.averageViews} />
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>4. What's your campaign description?</h4>
-        <textarea required onChange={e => setData({ ...data, description: e.target.value })} value={data.description} className="w-full h-32 border-2 border-gray-500 rounded-md" />
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>5. Choose categories for your product</h4>
-        <Select className="w-full h-10 border-2 border-gray-500 rounded-md" options={option} value={categories} onChange={(categories: any) => { setCategories(categories) }} isMulti={true} />
+      
+      
+      <div className="px-12 rounded-lg">
+        <h4 className='mb-2 font-semibold'>4. What's your campaign description?</h4>
+        <textarea required onChange={e => setData({ ...data, description: e.target.value })} value={data.description} className="w-full h-32 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" />
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>6. Preferred Gender?</h4>
-        <select required onChange={e => setData({ ...data, preferredGender: e.target.value })} value={data.preferredGender} className="w-full pl-4 h-12 border-2 bg-neutral-600 text-slate-200 rounded-lg font-bold cursor-pointer">
-          <option value='logo'>Any</option>
-          <option value='non logo'>Male</option>
-          <option value='non logo'>FeMale</option>
+
+      <div className='grid grid-cols-2 px-12 gap-4'>
+      <div className="rounded-lg">
+        <h4 className='mb-2 font-semibold'>5. Preferred Gender?</h4>
+        <select required onChange={e => setData({ ...data, preferredGender: e.target.value })} value={data.preferredGender} className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md cursor-pointer">
+          <option value='any'>Any</option>
+          <option value='female'>Female</option>
+          <option value='male'>Male</option>
         </select>
       </div>
-      <div className="p-12 rounded-lg hover:shadow-lg">
-        <h4 className='mb-5'>7. Type of promotion?</h4>
-        <select required onChange={e => setData({ ...data, type: e.target.value })} value={data.type} className="w-full h-12 border-2 pl-4 bg-neutral-600 text-slate-200 rounded-lg font-bold cursor-pointer">
+      <div className="rounded-lg">
+        <h4 className='mb-2 font-semibold'>6. Amount Spend On this Campaign ?</h4>
+        <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, creditUseForCampaign: e.target.value,amountUsed:e.target.value })} value={data.creditUseForCampaign} />
+      </div>
+      </div>
+
+      <div className="px-12 rounded-lg">
+        <h4 className='mb-2 font-semibold'>7. Choose categories for your product</h4>
+        <Select className="w-full h-12 border-2 bg-gray-100  border-gray-300 rounded-md" classNamePrefix="bg-gray-100 rounded-md" options={option} value={categories} onChange={(categories: any) => { setCategories(categories) }} isMulti={true} />
+      </div>
+      
+
+      <div className='grid grid-cols-2 px-12 gap-4'>
+      <div className="rounded-lg">
+        <h4 className='mb-2 font-semibold'>9. Type of promotion?</h4>
+        <select required onChange={e => setData({ ...data, type: e.target.value })} value={data.type} className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md cursor-pointer">
           <option value='logo'>Logo</option>
           <option value='non logo'>Not Logo</option>
         </select>
       </div>
+      <div className="rounded-lg">
+      <h4 className='mb-2 font-semibold'>7. Thumbenail of Your Campaign?</h4>
+      <div className='w-full p-2'>
+          <CldUploadWidget
+            uploadPreset="sponsify"
+            onSuccess={onUploadSuccessThembnailImgUrlHandler}
+          >
+            {({ open }) => {
+              function handleOnClick() {
+                open();
+              }
+              return (
+                <div>
+                  {data.thembnailImgUrl ?<img src={data.thembnailImgUrl} width={200} height={200} className='mb-3'/>:<></>}
+                  
+                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                 Upload Thaumnail image
+                </button>
+                </div>
+              );
+            }}
+          </CldUploadWidget>
+          </div>
+          </div></div>
       {data.type === 'logo' ?
-        <div className="p-12 rounded-lg hover:shadow-lg">
-          <h4 className='mb-5'>8. Price per 10k in Rs?</h4>
-          <input className="w-full h-10 border-2 border-gray-500 rounded-md" type="number" required onChange={(e: any) => setData({ ...data, price: e.target.value })} value={data.price} />
-          <h4 className='mb-4 mt-12'>9. Payable days for reel?</h4>
-          <input className="w-full h-10 border-2 border-gray-500 rounded-md" type="number" required onChange={(e: any) => setData({ ...data, day: e.target.value })} value={data.day} />
-          <h4 className='mb-4 mt-12'>10. Logo image?</h4>
-          <input className="w-full h-10 border-2 border-gray-500 rounded-md" type="file" />
-          <h4 className='mb-4 mt-12'>11. Link That Should present on Bio of Pages?</h4>
-          <input className="w-full h-10 border-2 border-gray-500 rounded-md" type="text" required onChange={(e: any) => setData({ ...data, biolink: e.target.biolink })} value={data.biolink} />
+        <div>
+          <div className='grid grid-cols-2 px-12 gap-4'>
+            <div className="rounded-lg">
+            <h4 className='mb-2 font-semibold'>10. Price per 10k in Rs?</h4>
+          <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type="number" required onChange={(e: any) => setData({ ...data, price: e.target.value })} value={data.price} />
+            </div>
+            <div className="rounded-lg">
+            <h4 className='mb-2 font-semibold'>9. Payable days for reel?</h4>
+          <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type="number" required onChange={(e: any) => setData({ ...data, day: e.target.value })} value={data.day} />
+            </div>
+          </div>
+          
+
+
+          <div className="px-12 rounded-lg mt-8">
+          <h4 className='mb-2 font-semibold'>13. Link That Should present on Bio of Pages?</h4>
+          <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type="text" required onChange={(e: any) => setData({ ...data, biolink: e.target.biolink })} value={data.biolink} />
+          </div>
+
+          <div className='grid grid-cols-2 px-12 mt-8 gap-4'>
+          <div className="rounded-lg">
+          <h4 className='mb-2 font-semibold'>11. Gif of Logo?</h4>
+          <div className='w-full p-2 px-4'>
+          <CldUploadWidget
+            uploadPreset="sponsify"
+            onSuccess={onUploadSuccessPostUrlHandler}
+          >
+            {({ open }) => {
+              function handleOnClick() {
+                open();
+              }
+              return (
+                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                  Upload logo gif
+                </button>
+              );
+            }}
+          </CldUploadWidget>
+          </div>
+          </div>
+          <div className="rounded-lg">
+          <h4 className='mb-2 font-semibold'>12. Main Image of Logo for verify posts?</h4>
+          <div className='w-full p-2 px-4'>
+          <CldUploadWidget
+            uploadPreset="sponsify"
+            onSuccess={onUploadSuccessVerificationImgUrlHandler}
+          >
+            {({ open }) => {
+              function handleOnClick() {
+                open();
+              }
+              return (
+                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                  Upload image without background
+                </button>
+              );
+            }}
+          </CldUploadWidget>
+            </div>
+          </div>
+          </div>
+          
+          
+
+
+         
         </div>
         :
         <div className="p-12 rounded-lg hover:shadow-lg">
@@ -153,10 +299,7 @@ const AutomateCampaign = () => {
               <h4 className='mb-4 mt-12'>10. Reel or Post need to promote?</h4>
 
 
-              <form onSubmit={handleSubmit}>
-                <input type="file" onChange={(e:any)=>{setFile(e.target.files[0])}} />
-                <button type="submit">Upload</button>
-              </form>
+
 
 
               <h4 className='mb-4 mt-12'>11. Link That Should present on Bio of Pages?(optional)</h4>
@@ -165,8 +308,9 @@ const AutomateCampaign = () => {
           }
 
         </div>}
-
-      <button>Submit</button>
+         
+      <button type='button' className='bg-neutral-700 w-32 py-2 px-6 ml-[45%] font-bold text-slate-200 rounded-full hover:bg-black' onClick={() => handleFinalSubmit(data)}>Submit</button>
+  
     </div>
   )
 }

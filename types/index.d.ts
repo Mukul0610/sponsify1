@@ -29,104 +29,43 @@ declare type CreateUserParams = {
     average_views:number,
     profile_pic_url:string
   };
-  
-  declare type UpdateImageParams = {
-    image: {
-      _id: string;
-      title: string;
-      publicId: string;
-      transformationType: string;
-      width: number;
-      height: number;
-      config: any;
-      secureURL: string;
-      transformationURL: string;
-      aspectRatio: string | undefined;
-      prompt: string | undefined;
-      color: string | undefined;
-    };
+  declare type CreateCampaignParams = {
+    campaignName: string,
+    minFolower: number,
+    averageViews: number,
+    description: string,
+    preferredGender: string,
+    type: string,
+    price: number,
+    day: number,
+    biolink: string,
+    wayOfPaying: string,
+    thembnailImgUrl: string,
+    promotionPostUrl:string,
+    verificationImgUrl:string,
+    creditUseForCampaign:number,
+    categories:any,
+    amountUsed:number
+  };
+
+  //deal
+  declare type CreateDealParms = {
     userId: string;
-    path: string;
+    sponsorshipId: string;
+    pageId: string,
+
   };
-  
-  declare type Transformations = {
-    restore?: boolean;
-    fillBackground?: boolean;
-    remove?: {
-      prompt: string;
-      removeShadow?: boolean;
-      multiple?: boolean;
-    };
-    recolor?: {
-      prompt?: string;
-      to: string;
-      multiple?: boolean;
-    };
-    removeBackground?: boolean;
+
+  declare type CreatePostParms = {
+  userId:string,
+  sponsorshipId:string,
+  pageId:string,
+  postlink:string,
+  paymentTime:any,
+  pageAverageViews:number
   };
+
   
-  // ====== TRANSACTION PARAMS
-  declare type CheckoutTransactionParams = {
-    plan: string;
-    credits: number;
-    amount: number;
-    buyerId: string;
-  };
-  
-  declare type CreateTransactionParams = {
-    stripeId: string;
-    amount: number;
-    credits: number;
-    plan: string;
-    buyerId: string;
-    createdAt: Date;
-  };
-  
-  declare type TransformationTypeKey =
-    | "restore"
-    | "fill"
-    | "remove"
-    | "recolor"
-    | "removeBackground";
-  
-  // ====== URL QUERY PARAMS
-  declare type FormUrlQueryParams = {
-    searchParams: string;
-    key: string;
-    value: string | number | null;
-  };
-  
-  declare type UrlQueryParams = {
-    params: string;
-    key: string;
-    value: string | null;
-  };
-  
-  declare type RemoveUrlQueryParams = {
-    searchParams: string;
-    keysToRemove: string[];
-  };
-  
-  declare type SearchParamProps = {
-    params: { id: string; type: TransformationTypeKey };
-    searchParams: { [key: string]: string | string[] | undefined };
-  };
-  
-  declare type TransformationFormProps = {
-    action: "Add" | "Update";
-    userId: string;
-    type: TransformationTypeKey;
-    creditBalance: number;
-    data?: IImage | null;
-    config?: Transformations | null;
-  };
-  
-  declare type TransformedImageProps = {
-    image: any;
-    type: string;
-    title: string;
-    transformationConfig: Transformations | null;
-    isTransforming: boolean;
-    hasDownload?: boolean;
-    setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
-  };
+  declare type UpdateCampaignParams={
+    amountUsed:number
+  }

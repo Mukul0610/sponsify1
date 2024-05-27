@@ -5,6 +5,7 @@ import InstaPage from "../database/models/instaPage.model"
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 import { ObjectId } from "mongodb";
+import Deal from "../database/models/deal.model";
 
 export async function createInstaPage(instaPage: UpdateInstaPageParams) {
     try {
@@ -50,7 +51,7 @@ export async function createInstaPage(instaPage: UpdateInstaPageParams) {
       await connectToDatabase();
   
       // Find user to delete
-      const pageToDelete = await InstaPage.findOne({ pageId });
+      const pageToDelete = await InstaPage.findOne({ _id: new ObjectId(pageId)});
   
       if (!pageToDelete) {
         throw new Error("User not found");
@@ -58,6 +59,7 @@ export async function createInstaPage(instaPage: UpdateInstaPageParams) {
   
       // Delete user
       const deletedPage = await InstaPage.findByIdAndDelete(pageToDelete._id);
+      const deletedDeal = await Deal.deleteMany({ pageId: pageId });
       revalidatePath("/profile");
   
       return deletedPage ? JSON.parse(JSON.stringify(deletedPage)) : null;
@@ -77,6 +79,22 @@ export async function createInstaPage(instaPage: UpdateInstaPageParams) {
       
   
       return JSON.parse(JSON.stringify(pages));
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  export async function updateInstaPage(id: string, page: UpdateInstaPageParams) {
+    try {
+      await connectToDatabase();
+  
+      const updatedPage = await InstaPage.findOneAndUpdate({ id }, page, {
+        new: true,
+      });
+  
+      if (!updatedPage) throw new Error("User update failed");
+      
+      return JSON.parse(JSON.stringify(updatedPage));
     } catch (error) {
       handleError(error);
     }

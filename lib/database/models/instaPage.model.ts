@@ -32,10 +32,17 @@ const InstaPageSchema=new Schema({
     average_views:{
         type: Number,
     },
+    categories: {
+        type: Array
+      },
     profile_pic_url:{
         type: String,
         required: true,
-    }
+    },
+    timeOfUpdate: {
+        type: Date,
+        default: Date.now // Set default value to current time
+      }
     })
 
     const InstaPage = models?.InstaPage || model("InstaPage", InstaPageSchema);

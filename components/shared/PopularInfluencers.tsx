@@ -1,19 +1,21 @@
-import { numToString } from '@/components/shared/funtions';
 import { getAllInstaPages } from '@/lib/actions/instaPage.action';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import {Carousel,CarouselContent,CarouselItem,CarouselNext,CarouselPrevious,} from "@/components/ui/carousel"
+import { numToString } from './funtions';
 
-const influencers = async() => {
+const PopularInfluencers = async() => {
   const allPages = await getAllInstaPages();
-  const popularInfluencer = allPages.sort((a:any, b:any) => b.followers - a.followers)
+  const popularInfluencer = allPages.sort((a:any, b:any) => b.average_views - a.average_views)
   return (
     <div>
-      <h2 className='text-4xl mb-4 font-bold text-[#0a0a0a]'>INFLUENCERS</h2>
-      <hr className='shadow-lg h-2 '/>
-      <div className='grid grid-cols-4 gap-8 mt-10'>
+      <h2 className='text-3xl mb-6 font-bold text-neutral-800'>Popular Influencer</h2>
+      <Carousel opts={{align: "end",}} className="w-full">
+      <CarouselContent>
       {popularInfluencer.map((page: any) => (
-                    <div key={page._id} className='flex flex-col justify-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
+                    <CarouselItem  key={page._id} className='md:basis-1/2 lg:basis-1/4 '>
+                    <div className='flex flex-col justify-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
                     <Link href={`/influencers/${page._id}`} style={{ textDecoration: 'none',color:'black' }}>
                     <div className='flex flex-col justify-center mt-5 mb-8 w-full items-center gap-1' >
                     <Image src={page.profile_pic_url} alt='profile' width={180} height={180} className='rounded-full border-8 border-zinc-800'/>
@@ -24,14 +26,18 @@ const influencers = async() => {
                       </div>
                     </Link>
                     </div>
+                    </CarouselItem >
                   
                   ))}
 
-      </div>
+</CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+        </Carousel>
 
     
     </div>
   )
 }
 
-export default influencers
+export default PopularInfluencers

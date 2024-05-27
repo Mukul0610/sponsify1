@@ -7,6 +7,9 @@ import { redirect } from "next/navigation";
 import { getInstaPageByUserId } from '@/lib/actions/instaPage.action'
 import { getUserById } from "@/lib/actions/user.actions";
 import AddInstaPage from '@/components/shared/AddInstaPage';
+import { getDealByUserId } from '@/lib/actions/deal.action';
+import InstaPagesOfProfile from '@/components/shared/InstaPagesOfProfile';
+import AllDeals from '@/components/shared/AllDeals';
 
 
 const profile = async () => {
@@ -17,6 +20,7 @@ const profile = async () => {
   const id = user._id
   if (!id) redirect("/sign-in");
   const pages = await getInstaPageByUserId(id);
+  
   return (
     <div>
       <section className="profile">
@@ -30,48 +34,11 @@ const profile = async () => {
             <Image src="/assets/icons/coins.svg" alt="coins" width={50} height={50} className="size-9 md:size-12" />
             <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
               </div>
-              <div>
-            {pages ?
-              <div className='width-full  p-3 pl-4 mt-8'>
-                <h2 className='text-2xl flex justify-center font-bold'>Your Insta Pages</h2>
-                <div className="grid grid-cols-1 md:grid-cols-7 items-center gap-x-12 md:gap-x-12 gap-y-12 md:gap-y-0 py-5 md:py-8 text-gray-700 text-lg md:text-base font-semibold">
-                  <p>Page User Name</p>
-                  <p>Full Name</p>
-                  <p>Followers </p>
-                  <p>Following</p>
-                  <p>No. Of Posts</p>
-                  
-                  <p>Average Views</p>
-                  <p>Remove</p>
-                </div>
-                <hr />
-                <div>
-                  {pages.map((page: any) => (
-                    <div key={page._id}>
-                    <div  className="grid grid-cols-1 md:grid-cols-7 items-center gap-x-12 md:gap-x-12 gap-y-12 md:gap-y-0 py-5 md:py-8 text-gray-700 text-lg md:text-base font-semibold">
-
-                      <p>{page.pageUserName}</p>
-                      <p>{page.full_name}</p>
-                      <p>{page.followers} </p>
-                      <p>{page.following}</p>
-                      <p>{page.media_count}</p>
-                      
-                      <p>{page.average_views}</p>
-                      <p><img src="/assets/icons/remove_icon.png" alt="" /></p>
-                    </div>
-                    <hr/>
-                    </div>
-                  
-                  ))}
-
-
-                </div>
-              </div> :
-              <div></div>
-            }
-
-          </div>
+   
+   
+            <InstaPagesOfProfile param={id} />
           <AddInstaPage param={id} />
+        <AllDeals param={id}/>
         </div>
       </section>
     </div>
