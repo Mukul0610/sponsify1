@@ -78,7 +78,7 @@ const AutomateCampaign: React.FC<AutomateCampaignProps> = ({ param ,credits})=> 
   
 
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([{value:""}]);
 
   const [data, setData] = useState({
     userId:param,
