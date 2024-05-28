@@ -49,7 +49,7 @@ export async function getAllCampaigns() {
         { _id: sponId },
       { amountUsed:amount},
       { new: true }
-      );
+      );    
   
       if (!updatedCampaign) throw new Error("User update failed");
       
