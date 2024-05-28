@@ -25,7 +25,8 @@ const [campaigns,setCampaigns]=useState([{
   amountUsed:0,
   price:0,
   verificationImgUrl:"mukul",
-  day:0
+  day:0,
+  biolink:""
 }]); 
 const [addpost,setAddPost]=useState(false)
 const [post,setPost]=useState("")
@@ -43,14 +44,13 @@ const addPost =(pageViews:number,sponamount:number,price:number)=>{
 
 const router = useRouter()
 //deal data adding and verifying posts
-const handleSubmite=async(e:string,post:string,day:number,views:number,amountRemaining:number,price:number)=>{
+const handleSubmite=async(e:string,post:string,day:number,views:number,amountRemaining:number,price:number, userName:string, biolinks:string)=>{
     try {
       // Fetch data from the API
       const response = await fetch(`http://127.0.0.1:5000/process?reel_url=${post}&input_image_path=${e}`);
       const maindata = await response.json();
   
       // Assuming setResult is a function to update some state with the fetched da
-      console.log(maindata);
   
       if (maindata) {
         // Prepare data for the new post
@@ -60,7 +60,9 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
           pageId: pageId,
           postlink: post,
           paymentTime: new Date(Date.now() + day * 24 * 60 * 60 * 1000),
-          pageAverageViews: views
+          pageAverageViews: views,
+          pageUserName:userName,
+          biolink:biolinks
         };
   
         // Create a new post
@@ -69,10 +71,9 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
   
         // Update the amount used in the campaign
         const updateAmountUsed = amountRemaining - price * views * 0.0001;
-        await updateCampaign(sponId, { amountUsed: updateAmountUsed });
+        await updateCampaign(sponId, updateAmountUsed);
   
         // Refresh the router to reflect changes
-        router.refresh();
       }
     } catch (error) {
       alert(error);
@@ -128,7 +129,7 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
         {addpost?
         <div className='flex'>
           <input className="h-10 px-2 border-2 border-gray-500 w-[60%] rounded-l-lg" type='string' required onChange={(e: any) => setPost(e.target.value )} value={post} />
-          <button className='font-semibold bg-neutral-700 text-zinc-100 rounded-r-lg p-2 px-6' onClick={()=>handleSubmite(campaigns[0].verificationImgUrl,post,campaigns[0].day,pages[0].average_views,campaigns[0].amountUsed,campaigns[0].price)}>Submit</button>
+          <button className='font-semibold bg-neutral-700 text-zinc-100 rounded-r-lg p-2 px-6' onClick={()=>handleSubmite(campaigns[0].verificationImgUrl,post,campaigns[0].day,pages[0].average_views,campaigns[0].amountUsed,campaigns[0].price,pages[0].pageUserName,campaigns[0].biolink)}>Submit</button>
         </div>:<div></div>}
         <button onClick={()=>addPost(pages[0].average_views, campaigns[0].amountUsed, campaigns[0].price)} className='font-semibold bg-neutral-700 text-zinc-100 rounded-full py-2 w-[20%]'>+ Add New Post</button>
     </div>

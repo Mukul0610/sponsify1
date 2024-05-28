@@ -62,7 +62,9 @@ declare type CreateUserParams = {
   pageId:string,
   postlink:string,
   paymentTime:any,
-  pageAverageViews:number
+  pageAverageViews:number,
+  pageUserName:string,
+  biolink:string
   };
 
   

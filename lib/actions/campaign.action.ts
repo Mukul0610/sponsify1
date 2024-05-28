@@ -41,13 +41,15 @@ export async function getAllCampaigns() {
     }
   }
 
-  export async function updateCampaign(sponId: string, campaign: UpdateCampaignParams) {
+  export async function updateCampaign(sponId: string, amount: number) {
     try {
       await connectToDatabase();
   
-      const updatedCampaign = await Campaign.findOneAndUpdate({ sponId }, campaign, {
-        new: true,
-      });
+      const updatedCampaign = await Campaign.findOneAndUpdate(
+        { _id: sponId },
+      { amountUsed:amount},
+      { new: true }
+      );
   
       if (!updatedCampaign) throw new Error("User update failed");
       

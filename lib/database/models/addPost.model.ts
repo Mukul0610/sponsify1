@@ -33,6 +33,13 @@ const AddPostSchema=new Schema({
     paymentTime:{
         type:Date,
         requiered:true,
+    },
+    pageUserName:{
+        type:String,
+        requiered:true,
+    },
+    biolink:{
+        type:String
     }
 })
     const AddPost = models?.AddPost || model("AddPost", AddPostSchema);

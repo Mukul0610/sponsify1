@@ -3,8 +3,7 @@ import LatestSponsorship from '@/components/shared/LatestSponsorship'
 import PopularInfluencers from '@/components/shared/PopularInfluencers'
 import PopularSponsorships from '@/components/shared/PopularSponsorships'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import axios from 'axios'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const Home = () => {
 
