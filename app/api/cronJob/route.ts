@@ -21,6 +21,7 @@ export async function GET(request: Request) {
                 await updateCampaign(deals[i].sponId, updateAmountUsed);
                 const updatedCredit=deals[i].prices*maindata.views*0.0001;
                 const userUpdate= await updateCredits(deals[i].userId,updatedCredit);
+                
             }       
         
         }
