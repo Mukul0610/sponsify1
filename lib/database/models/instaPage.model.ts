@@ -41,7 +41,7 @@ const InstaPageSchema=new Schema({
     },
     timeOfUpdate: {
         type: Date,
-        default: Date.now // Set default value to current time
+        default: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Set default value to current time
       }
     })
 

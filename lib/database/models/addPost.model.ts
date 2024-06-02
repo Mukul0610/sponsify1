@@ -22,9 +22,8 @@ const AddPostSchema=new Schema({
         type: Date,
         default: Date.now // Set default value to current time
       },
-    view:{
+    pageAverageViews:{
         type:Number,
-        default:0
     },
     dealStatus:{
         type:String,
@@ -40,6 +39,9 @@ const AddPostSchema=new Schema({
     },
     biolink:{
         type:String
+    },
+    prices:{
+        type:Number
     }
 })
     const AddPost = models?.AddPost || model("AddPost", AddPostSchema);

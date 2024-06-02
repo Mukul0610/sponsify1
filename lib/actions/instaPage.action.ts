@@ -68,6 +68,39 @@ export async function createInstaPage(instaPage: UpdateInstaPageParams) {
     }
   }
 
+  export async function getAllInstaPageToUpdate(id:string) {
+    try {
+      await connectToDatabase();
+  
+      const page = await InstaPage.find({
+        timeOfUpdate: { $lt: Date.now() },
+        userId:id
+      });
+  
+      if (page.length === 0) throw new Error("No pages found");
+  
+      return JSON.parse(JSON.stringify(page));
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  export async function updateOnePage(pageId: string, page: UpdatePageParams) {
+    try {
+      await connectToDatabase();
+  
+      const updatedUser = await InstaPage.findOneAndUpdate({_id:pageId}, page, {
+        new: true,
+      });
+  
+      if (!updatedUser) throw new Error("User update failed");
+      
+      return JSON.parse(JSON.stringify(updatedUser));
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
   
 
   export async function getInstaPageById(id: any) {

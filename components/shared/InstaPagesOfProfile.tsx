@@ -11,6 +11,8 @@ interface InstaPagesOfProfile {
 const InstaPagesOfProfile: React.FC<InstaPagesOfProfile> = async({ param })=> {
   
     const pages = await getInstaPageByUserId(param);
+
+  
   return (
     <div className='mt-8 shadow-xl rounded-xl bg-gray-200'>
     {pages ?

@@ -10,11 +10,11 @@ const PopularInfluencers = async() => {
   const popularInfluencer = allPages.sort((a:any, b:any) => b.average_views - a.average_views)
   return (
     <div>
-      <h2 className='text-3xl mb-6 font-bold text-neutral-800'>Popular Influencer</h2>
-      <Carousel opts={{align: "end",}} className="w-full">
-      <CarouselContent>
+      <h2 className='text-3xl font-bold ml-4 lg:ml-0 text-neutral-800 gap-2 mb-4'>Popular Influencer</h2>
+      <Carousel opts={{align: "end"}} className="w-[78%] py-2 lg:w-full md:w-full">
+      <CarouselContent >
       {popularInfluencer.map((page: any) => (
-                    <CarouselItem  key={page._id} className='md:basis-1/2 lg:basis-1/4 '>
+                    <CarouselItem  key={page._id} className='md:basis-1/2 lg:basis-1/4 ml-4 lg:ml-0 flex flex-cols justify-center'>
                     <div className='flex flex-col justify-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
                     <Link href={`/influencers/${page._id}`} style={{ textDecoration: 'none',color:'black' }}>
                     <div className='flex flex-col justify-center mt-5 mb-8 w-full items-center gap-1' >

@@ -1,9 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['img.clerk.com','instagram.fidr4-1.fna.fbcdn.net','res.cloudinary.com','instagram.fbho4-4.fna.fbcdn.net','instagram.fbho3-1.fna.fbcdn.net',"instagram.fbho1-4.fna.fbcdn.net","instagram.fbho4-1.fna.fbcdn.net"],
+ 
+  
+  
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "**" // * wildcard on dynamic part of domain url
+        }
+      ]
+    }
+  
 
-  },
 
 };
 

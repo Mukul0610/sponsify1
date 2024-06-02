@@ -44,7 +44,7 @@ const AutomateCampaign: React.FC<AutomateCampaignProps> = ({ param ,credits})=> 
   const handleFinalSubmit = async (e: CreateCampaignParams) => {
     if(credits>e.creditUseForCampaign){
     const newCampaign = await createCampaign(e)
-    const updatedCredit=credits-e.creditUseForCampaign
+    const updatedCredit=0-e.creditUseForCampaign
     const userUpdate= await updateCredits(param,updatedCredit)
 
     if(newCampaign){

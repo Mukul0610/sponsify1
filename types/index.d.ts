@@ -64,10 +64,23 @@ declare type CreateUserParams = {
   paymentTime:any,
   pageAverageViews:number,
   pageUserName:string,
-  biolink:string
+  biolink:string,
+  prices:number
   };
 
   
   declare type UpdateCampaignParams={
     amountUsed:number
   }
+
+  declare type UpdatePageParams = {
+    pageUserName: string;
+    full_name: string,
+    followers: number,
+    following: number,
+    media_count: number,
+    bio: string,
+    average_views:number,
+    profile_pic_url:string,
+    timeOfUpdate: any
+  };

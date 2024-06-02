@@ -30,7 +30,7 @@ const [campaigns,setCampaigns]=useState([{
 }]); 
 const [addpost,setAddPost]=useState(false)
 const [post,setPost]=useState("")
-const [result,setResult]=useState(false)
+
 
 
 const addPost =(pageViews:number,sponamount:number,price:number)=>{
@@ -41,11 +41,13 @@ const addPost =(pageViews:number,sponamount:number,price:number)=>{
     alert("Sorry This Campaing doesn't Have enough credit to Pay this page, you can try with another page with less averge views ")
   }
 }
+const [verify,setVerify]=useState(false)
 
 const router = useRouter()
 //deal data adding and verifying posts
 const handleSubmite=async(e:string,post:string,day:number,views:number,amountRemaining:number,price:number, userName:string, biolinks:string)=>{
-    try {
+setVerify(true)
+  try {
       // Fetch data from the API
       const response = await fetch(`http://127.0.0.1:5000/process?reel_url=${post}&input_image_path=${e}`);
       const maindata = await response.json();
@@ -62,7 +64,8 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
           paymentTime: new Date(Date.now() + day * 24 * 60 * 60 * 1000),
           pageAverageViews: views,
           pageUserName:userName,
-          biolink:biolinks
+          biolink:biolinks,
+          prices:price
         };
   
         // Create a new post
@@ -72,12 +75,13 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
         // Update the amount used in the campaign
         const updateAmountUsed = amountRemaining - price * views * 0.0001;
         await updateCampaign(sponId, updateAmountUsed);
-  
+        setPost("")
         // Refresh the router to reflect changes
       }
     } catch (error) {
       alert(error);
     }
+    setVerify(false)
   };
   
     useEffect(() => {
@@ -132,6 +136,7 @@ const handleSubmite=async(e:string,post:string,day:number,views:number,amountRem
           <button className='font-semibold bg-neutral-700 text-zinc-100 rounded-r-lg p-2 px-6' onClick={()=>handleSubmite(campaigns[0].verificationImgUrl,post,campaigns[0].day,pages[0].average_views,campaigns[0].amountUsed,campaigns[0].price,pages[0].pageUserName,campaigns[0].biolink)}>Submit</button>
         </div>:<div></div>}
         <button onClick={()=>addPost(pages[0].average_views, campaigns[0].amountUsed, campaigns[0].price)} className='font-semibold bg-neutral-700 text-zinc-100 rounded-full py-2 w-[20%]'>+ Add New Post</button>
+        {verify?<div>Verigying...</div>:<></>}
     </div>
   )
 }

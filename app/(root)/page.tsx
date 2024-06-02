@@ -8,7 +8,7 @@ import React from 'react'
 const Home = () => {
 
   return (
-    <div className='flex flex-col gap-16'>
+    <div className='flex flex-col gap-8'>
       <SignedIn>
       <LatestSponsorship/>
       <PopularSponsorships/>

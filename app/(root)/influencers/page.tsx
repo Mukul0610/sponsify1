@@ -9,11 +9,11 @@ const influencers = async() => {
   const popularInfluencer = allPages.sort((a:any, b:any) => b.followers - a.followers)
   return (
     <div>
-      <h2 className='text-4xl mb-4 font-bold text-[#0a0a0a]'>INFLUENCERS</h2>
-      <hr className='shadow-lg h-2 '/>
-      <div className='grid grid-cols-4 gap-8 mt-10'>
+      <h2 className='text-4xl mb-4 ml-6 lg:ml-0 font-extrabold text-neutral-700'>INFLUENCERS</h2>
+      <hr className='shadow-lg h-2  '/>
+      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full mt-2 ml-[20%]'>
       {popularInfluencer.map((page: any) => (
-                    <div key={page._id} className='flex flex-col justify-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
+                    <div key={page._id} className='flex flex-col justify-center items-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
                     <Link href={`/influencers/${page._id}`} style={{ textDecoration: 'none',color:'black' }}>
                     <div className='flex flex-col justify-center mt-5 mb-8 w-full items-center gap-1' >
                     <Image src={page.profile_pic_url} alt='profile' width={180} height={180} className='rounded-full border-8 border-zinc-800'/>
