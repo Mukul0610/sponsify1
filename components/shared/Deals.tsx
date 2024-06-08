@@ -50,7 +50,7 @@ const Deals: React.FC<DealsProps> = ({ dealId,userId, pageId, sponId }) => {
     setVerify(true)
     try {
       // Fetch data from the API
-      const response = await fetch(`http://127.0.0.1:5000/process?reel_url=${post}&input_image_path=${e}`);
+      const response = await fetch(`https://pythonapi-2fhr.onrender.com/process?reel_url=${post}&input_image_path=${e}`);
       const maindata = await response.json();
 
       if (maindata) {

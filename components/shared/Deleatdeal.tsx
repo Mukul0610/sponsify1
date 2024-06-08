@@ -9,6 +9,8 @@ import {
   } from "@/components/ui/alert-dialog"
 import { deleteDeal } from '@/lib/actions/deal.action';
 
+import { Image } from 'lucide-react';
+
   interface DeleatDealProps {
     Id:string // Assuming param is a string, change type as per your requirement
   }
