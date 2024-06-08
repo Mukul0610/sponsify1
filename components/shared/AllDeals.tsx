@@ -12,7 +12,7 @@ const AllDeals: React.FC<AllDealsProps> = async({ param })=>  {
     <div>
       {deals.map((deal:any)=>(
         <div key={deal._id}>
-            <Deals userId={param} pageId={deal.pageId} sponId={deal.sponsorshipId}/>
+            <Deals dealId={deal._id}userId={param} pageId={deal.pageId} sponId={deal.sponsorshipId}/>
         </div>
       ))}
     </div>

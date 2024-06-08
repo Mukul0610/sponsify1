@@ -10,6 +10,7 @@ import AddInstaPage from '@/components/shared/AddInstaPage';
 import { getDealByUserId } from '@/lib/actions/deal.action';
 import InstaPagesOfProfile from '@/components/shared/InstaPagesOfProfile';
 import AllDeals from '@/components/shared/AllDeals';
+import AllCampaign from '@/components/shared/AllCampaign';
 
 
 const profile = async () => {
@@ -24,7 +25,7 @@ const profile = async () => {
   return (
     <div>
       <section className="profile">
-        <div className="profile-balance">
+        <div className="profile-balance mt-8">
           <div className='flex flex-col items-center mt-[-80px]'>
             <Image src={user.photo} alt="coins" width={100} height={100} className="rounded-full" />
             <p className='mt-2 text-center font-bold"'>{user.username}</p>
@@ -39,6 +40,7 @@ const profile = async () => {
             <InstaPagesOfProfile param={id} />
           <AddInstaPage param={id} />
         <AllDeals param={id}/>
+        <AllCampaign param={id}/>
         </div>
       </section>
     </div>

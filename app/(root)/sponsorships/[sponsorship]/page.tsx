@@ -17,8 +17,8 @@ const Pages = async({params}:any) => {
     const sponid=params.sponsorship
   return (
     <div>
-      <div>
-        <Image src={campaign[0].thembnailImgUrl} width={600} height={500} className='border-[32px] p-1 border-neutral-800 rounded-3xl' alt=""/>
+      <div className='m-4'>
+        <Image src={campaign[0].thembnailImgUrl} width={600} height={500} className='border-[28px] p-1 border-neutral-800 rounded-3xl' alt=""/>
         <div className='ml-6 mt-8 flex flex-col gap-6 w-[56%]'>
         <p className='text-3xl font-bold text-neutral-700'>{campaign[0].campaignName}</p>
         <p className='text-lg text-neutral-500'>{formatDate(campaign[0].uploadTime)}</p>

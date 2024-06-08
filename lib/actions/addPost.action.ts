@@ -52,4 +52,18 @@ export async function updatePostViews(userId: string, views: any) {
       handleError(error);
     }
   }
+
+  export async function getAllDealBySponId(id: string) {
+    try {
+      await connectToDatabase();
+  
+      const deals = await AddPost.find({ sponsorshipId: id});
+  
+      if (!deals) throw new Error("User not found");
+  
+      return JSON.parse(JSON.stringify(deals));
+    } catch (error) {
+      handleError(error);
+    }
+  }
   

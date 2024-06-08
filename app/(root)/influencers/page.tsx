@@ -8,10 +8,10 @@ const influencers = async() => {
   const allPages = await getAllInstaPages();
   const popularInfluencer = allPages.sort((a:any, b:any) => b.followers - a.followers)
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center'>
       <h2 className='text-4xl mb-4 ml-6 lg:ml-0 font-extrabold text-neutral-700'>INFLUENCERS</h2>
-      <hr className='shadow-lg h-2  '/>
-      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full mt-2 ml-[20%]'>
+      <hr className='shadow-lg h-2'/>
+      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center'>
       {popularInfluencer.map((page: any) => (
                     <div key={page._id} className='flex flex-col justify-center items-center w-60 p-4 bg-zinc-800 rounded-2xl shadow-lg shadow-zinc-800 hover:shadow-red-600'>
                     <Link href={`/influencers/${page._id}`} style={{ textDecoration: 'none',color:'black' }}>

@@ -30,6 +30,22 @@ export async function getAllCampaigns() {
       handleError(error);
     }
   }
+
+  export async function getCampaignByUserId(id: string) {
+    try {
+      await connectToDatabase();
+  
+      const campaign = await Campaign.find({ userId: id});
+  
+      if (!campaign) throw new Error("User not found");
+  
+      return JSON.parse(JSON.stringify(campaign));
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+
   export async function getCampaignById(id: any) {
     try {
    +   await connectToDatabase();

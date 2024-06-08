@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server';
 import { auth, getAuth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { getUserById, updateCredits } from '@/lib/actions/user.actions';
+import newupload from '@/public/assets/icons/newupload.png'
 
 const option = [
   { value: "any", label: "Any" },
@@ -46,8 +47,9 @@ const AutomateCampaign: React.FC<AutomateCampaignProps> = ({ param ,credits})=> 
     const newCampaign = await createCampaign(e)
     const updatedCredit=0-e.creditUseForCampaign
     const userUpdate= await updateCredits(param,updatedCredit)
-
+      
     if(newCampaign){
+      alert("Your Campaign Is Create")
       setData({userId:param,
         campaignName: '',
         minFolower: 10000,
@@ -69,7 +71,7 @@ const AutomateCampaign: React.FC<AutomateCampaignProps> = ({ param ,credits})=> 
     }
 
     return NextResponse.json({ message: "OK", newPage: createCampaign});
-    alert("Your Campaign Is Create")
+    
     }
     else{
       alert("You don't Have credit")
@@ -136,7 +138,7 @@ useEffect(()=>{
         <h4 className='mb-2 font-semibold'>1. What your campaign name?</h4>
         <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='text' required onChange={e => setData({ ...data, campaignName: e.target.value })} value={data.campaignName} />
       </div>
-      <div className='grid grid-cols-2 px-12 gap-4'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 md:gap-2 px-12 lg:gap-4 gap-9 '>
       <div className="rounded-lg">
         <h4 className='mb-2 font-semibold'>2. Minimum followers required?</h4>
         <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type='number' required onChange={(e: any) => setData({ ...data, minFolower: e.target.value })} value={data.minFolower} />
@@ -153,7 +155,7 @@ useEffect(()=>{
         <textarea required onChange={e => setData({ ...data, description: e.target.value })} value={data.description} className="w-full h-32 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" />
       </div>
 
-      <div className='grid grid-cols-2 px-12 gap-4'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 md:gap-2 px-12 lg:gap-4 gap-9 '>
       <div className="rounded-lg">
         <h4 className='mb-2 font-semibold'>5. Preferred Gender?</h4>
         <select required onChange={e => setData({ ...data, preferredGender: e.target.value })} value={data.preferredGender} className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md cursor-pointer">
@@ -174,15 +176,15 @@ useEffect(()=>{
       </div>
       
 
-      <div className='grid grid-cols-2 px-12 gap-4'>
-      <div className="rounded-lg">
+      
+      <div className="px-12 rounded-lg">
         <h4 className='mb-2 font-semibold'>9. Type of promotion?</h4>
         <select required onChange={e => setData({ ...data, type: e.target.value })} value={data.type} className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md cursor-pointer">
           <option value='logo'>Logo</option>
           <option value='non logo'>Not Logo</option>
         </select>
       </div>
-      <div className="rounded-lg">
+      <div className="px-12 rounded-lg">
       <h4 className='mb-2 font-semibold'>7. Thumbenail of Your Campaign?</h4>
       <div className='w-full p-2'>
           <CldUploadWidget
@@ -197,7 +199,8 @@ useEffect(()=>{
                 <div>
                   {data.thembnailImgUrl ?<img src={data.thembnailImgUrl} width={200} height={200} className='mb-3'/>:<></>}
                   
-                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                <button onClick={handleOnClick} className='bg-gray-200 border-dashed border-2 border-gray-500 flex flex-col justify-center w-full h-36 rounded-lg font-semibold items-center'>
+                <Image src={newupload} alt='' width={30} height={30}/>
                  Upload Thaumnail image
                 </button>
                 </div>
@@ -205,10 +208,10 @@ useEffect(()=>{
             }}
           </CldUploadWidget>
           </div>
-          </div></div>
+          </div>
       {data.type === 'logo' ?
         <div>
-          <div className='grid grid-cols-2 px-12 gap-4'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 md:gap-2 px-12 lg:gap-4 gap-9 '>
             <div className="rounded-lg">
             <h4 className='mb-2 font-semibold'>10. Price per 10k in Rs?</h4>
           <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type="number" required onChange={(e: any) => setData({ ...data, price: e.target.value })} value={data.price} />
@@ -226,9 +229,9 @@ useEffect(()=>{
           <input className="w-full h-12 p-2 px-4 border-2 border-gray-300 bg-gray-100 rounded-md" type="text" required onChange={(e: any) => setData({ ...data, biolink: e.target.biolink })} value={data.biolink} />
           </div>
 
-          <div className='grid grid-cols-2 px-12 mt-8 gap-4'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 md:gap-2 px-12 lg:gap-4 gap-9 mt-6 '>
           <div className="rounded-lg">
-          <h4 className='mb-2 font-semibold'>11. Gif of Logo?</h4>
+          <h4 className='mb-2 font-semibold'>11. Post or logo that need to be promote?</h4>
           <div className='w-full p-2 px-4'>
           <CldUploadWidget
             uploadPreset="sponsify"
@@ -239,9 +242,12 @@ useEffect(()=>{
                 open();
               }
               return (
-                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                <div>{data.promotionPostUrl ?<h2>Your video/image upload is successful</h2>:<></>}
+                <button onClick={handleOnClick} className='bg-gray-200 border-dashed border-2 border-gray-500 flex flex-col justify-center w-full h-36 rounded-lg font-semibold items-center'>
+                  <Image src={newupload} alt='' width={30} height={30}/>
                   Upload logo gif
                 </button>
+                </div>
               );
             }}
           </CldUploadWidget>
@@ -259,9 +265,13 @@ useEffect(()=>{
                 open();
               }
               return (
-                <button onClick={handleOnClick} className='bg-gray-700 p-1 px-3 rounded-lg font-semibold text-white items-end'>
+                <div>
+                  {data.verificationImgUrl ?<img src={data.verificationImgUrl} width={200} height={200} className='mb-3'/>:<></>}
+                <button onClick={handleOnClick} className='bg-gray-200 border-dashed border-2 border-gray-500 flex flex-col justify-center w-full h-36 rounded-lg font-semibold items-center'>
+                  <Image src={newupload} alt='' width={30} height={30}/>
                   Upload image without background
                 </button>
+                </div>
               );
             }}
           </CldUploadWidget>
@@ -279,7 +289,7 @@ useEffect(()=>{
           <h4 className='mb-5'>8. How You are Going to Pay</h4>
           <select required onChange={e => setData({ ...data, wayOfPaying: e.target.value })} value={data.wayOfPaying} className="w-full h-12 border-2 pl-4 bg-neutral-600 text-slate-200 rounded-lg font-bold cursor-pointer">
             <option value='views'>On Views</option>
-            <option value='upload'>On Upload</option>
+            <option value='views'>On Upload</option>
           </select>
           {data.wayOfPaying === 'views' ?
             <div className='mt-12'>
