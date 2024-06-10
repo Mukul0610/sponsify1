@@ -13,7 +13,7 @@ import { Button } from "../ui/button"
 const MobileNav = () => {
   const pathname = usePathname();
   return (
-    <div>
+
       <header className="header"><Link href='/' className="flex item-center gap-2 md:py-2"><p className="font-extrabold text-2xl">SPON<span className="text-red-600">SIFY</span></p>
 
       </Link>
@@ -57,7 +57,7 @@ const MobileNav = () => {
           </SignedOut>
         </nav>
       </header>
-    </div>
+    
   )
 }
 

@@ -110,6 +110,42 @@ const AddInstaPage: React.FC<AddInstaPageProps> = ({ param })=> {
     })) 
   },[categories])
 
+  useEffect(() => {
+    const updateData = async () => {
+      try {
+        const pages = await getAllInstaPageToUpdate(param);
+        if (pages && pages.length > 0 && pages[0].pageUserName) {
+          for (let i = 0; i < pages.length; i++) {
+            try {
+              const response = await fetch(`http://localhost:5000/${pages[i].pageUserName}`);
+              const maindata = await response.json();
+              if (maindata) {
+                const data = {
+                  pageUserName: maindata.username,
+                  full_name: maindata.full_name,
+                  followers: maindata.followers,
+                  following: maindata.following,
+                  media_count: maindata.media_count,
+                  bio: maindata.bio,
+                  average_views: maindata.average_views,
+                  profile_pic_url: maindata.profile_pic_url,
+                  timeOfUpdate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                };
+
+                await updateOnePage(pages[i]._id, data);
+              }
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    };
+    updateData();
+  }, [param]);
+
   
 
 
