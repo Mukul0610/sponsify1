@@ -4,7 +4,6 @@ import Select from 'react-select'
 
 import React, { useEffect, useState } from 'react'
 
-import { redirect } from 'next/navigation'
 
 
 interface AddInstaPageProps {
@@ -117,7 +116,7 @@ const AddInstaPage: React.FC<AddInstaPageProps> = ({ param })=> {
         if (pages && pages.length > 0 && pages[0].pageUserName) {
           for (let i = 0; i < pages.length; i++) {
             try {
-              const response = await fetch(`http://localhost:5000/${pages[i].pageUserName}`);
+              const response = await fetch(`https://pythonapi-2fhr.onrender.com/${pages[i].pageUserName}`);
               const maindata = await response.json();
               if (maindata) {
                 const data = {

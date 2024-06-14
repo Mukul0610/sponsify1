@@ -23,6 +23,7 @@ const profile = async () => {
   if (!id) redirect("/sign-in");
   const pages = await getInstaPageByUserId(id);
   
+  
 
   return (
     <div>

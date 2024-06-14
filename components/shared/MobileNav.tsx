@@ -14,10 +14,11 @@ const MobileNav = () => {
   const pathname = usePathname();
   return (
 
-      <header className="header"><Link href='/' className="flex item-center gap-2 md:py-2"><p className="font-extrabold text-2xl">SPON<span className="text-red-600">SIFY</span></p>
+      <header className="header relative z-100"><Link href='/' className="flex item-center gap-2 md:py-2"><p className="font-extrabold text-2xl">SPON<span className="text-red-600">SIFY</span></p>
 
       </Link>
         <nav className="flex gap-2">
+      
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
             <Sheet>

@@ -16,8 +16,8 @@ const sponsorships = async() => {
                     <div key={campaign._id} className='flex flex-col justify-center items-center'>
                     <Link href={`/sponsorships/${campaign._id}`} style={{ textDecoration: 'none',color:'black' }}>
                     <div className='flex flex-col justify-center mt-5 mb-5 w-[243px] gap-1' >
-                    <div className="relative w-full h-0 pb-[100%]">
-                    <Image src={campaign.thembnailImgUrl} alt='profile' layout="fill" objectFit="cover"  className='border-4 rounded-2xl' />
+                    <div className="relative z-1 w-full h-0 pb-[100%]">
+                    <Image src={campaign.thembnailImgUrl} alt='profile' layout="fill" objectFit="cover"  className='rounded-2xl' />
                     </div>
 
                       <p className='ml-2 font-semibold text-xs text-gray-400'>{formatDate(campaign?.uploadTime)}</p>
