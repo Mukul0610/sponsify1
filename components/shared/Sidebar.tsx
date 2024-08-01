@@ -20,7 +20,7 @@ const Sidebar = () => {
                     </Link>
 
                     <nav className='sidebar-nav'>
-                        <SignedIn>
+                        
                             <ul className='sidebar-nav_elements'>
                                 {navLinks.map((link) => {
                                     const isActive = link.route === pathname
@@ -40,15 +40,9 @@ const Sidebar = () => {
                                     <UserButton afterSignOutUrl='/' showName/>
                                 </li>
                             </ul>
-                        </SignedIn>
+                    
 
-                        <SignedOut>
-                            <Button asChild className='button bg-gray-gradient bg-black'>
-                                <Link href='/sign-in'>
-                                    Login
-                                </Link>
-                            </Button>
-                        </SignedOut>
+                        
                     </nav>
                 </div>
             </aside>

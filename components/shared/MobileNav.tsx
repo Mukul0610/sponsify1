@@ -14,12 +14,10 @@ const MobileNav = () => {
   const pathname = usePathname();
   return (
 
-      <header className="header relative z-100"><Link href='/' className="flex item-center gap-2 md:py-2"><p className="font-extrabold text-2xl">SPON<span className="text-red-600">SIFY</span></p>
+      <header className="header"><Link href='/' className="flex item-center gap-2 md:py-2"><p className="font-extrabold text-2xl">SPON<span className="text-red-600">SIFY</span></p>
 
       </Link>
         <nav className="flex gap-2">
-      
-          <SignedIn>
             <UserButton afterSignOutUrl="/" />
             <Sheet>
               <SheetTrigger><Image src='/assets/icons/menu.png' alt="menu" width={32} height={32} className="cursor-pointer" /></SheetTrigger>
@@ -48,16 +46,11 @@ const MobileNav = () => {
                 </>
               </SheetContent>
             </Sheet>
-          </SignedIn>
-          <SignedOut>
-            <Button asChild className='button bg-gray-gradient bg-black'>
-              <Link href='/sign-in'>
-                Login
-              </Link>
-            </Button>
-          </SignedOut>
+          
+          
         </nav>
       </header>
+      
     
   )
 }

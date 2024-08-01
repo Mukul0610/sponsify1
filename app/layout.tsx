@@ -8,8 +8,16 @@ const inter = Inter({ subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
-  title: "Sponsify",
-  description: "Track Product Price",
+  title: "Sponsify - The Future of Promotion",
+  description: "Sponsify is revolutionizing the promotion industry with a platform that effortlessly verifies Instagram pages, checks influencer reels, and provides detailed campaign insights. Join our pre-launch phase and experience seamless and impactful promotional strategies.",
+  keywords: ["Sponsify", "promotion", "Instagram verification", "influencer marketing", "campaign insights", "social media marketing", "reel verification", "promotional strategies", "authentic campaigns", "marketing automation"],
+  authors: [{ name: "Sponsify Team", url: "https://sponsify1.vercel.app/" }], // Specify the author of the content
+  publisher: "Sponsify Inc.",
+  openGraph: {
+    title: "Sponsify - The Future of Promotion",
+    description: "Sponsify is revolutionizing the promotion industry with a platform that effortlessly verifies Instagram pages, checks influencer reels, and provides detailed campaign insights. Join our pre-launch phase and experience seamless and impactful promotional strategies.",
+    type: "website",
+    url: "https://sponsify1.vercel.app/"},
 };
 
 export default function RootLayout({

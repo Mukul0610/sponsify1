@@ -8,14 +8,11 @@ import {
 } from "@/components/ui/alert-dialog"
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { auth } from '@clerk/nextjs/server'
-import { getUserById } from '@/lib/actions/user.actions'
+
 import { getInstaPageById, getInstaPageByUserId } from '@/lib/actions/instaPage.action'
 import { getCampaignById } from '@/lib/actions/campaign.action'
 import {useRouter} from 'next/navigation';
 import { createDeal } from '@/lib/actions/deal.action'
-import { connectToDatabase } from '@/lib/database/mongoose'
-import { NextResponse } from 'next/server'
 
 interface PageVerificationButtonProps {
   param: string;
@@ -48,7 +45,7 @@ const PageVerificationButton: React.FC<PageVerificationButtonProps> = ({ param,s
 
 const handleFinal = async (e: CreateDealParms) => {
   const newCampaign = await createDeal(e)
-  alert("Your Campaign Is Create")
+  alert("For this page, the portal of this campaign has opened on your profile. If you are not able to see the portal, please refresh it. 🚀🔄")
 }
 
   
@@ -64,7 +61,6 @@ const handleFinal = async (e: CreateDealParms) => {
     
       if(page[0].followers>campaign[0].minFolower &&page[0].average_views>campaign[0].averageViews){
         handleFinal(data)
-          alert(data.userId)
           setOpen(false)
       }else{
         alert("Sorry Your Page is Not Eligible for this Campaign")

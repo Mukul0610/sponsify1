@@ -150,7 +150,7 @@ const AddInstaPage: React.FC<AddInstaPageProps> = ({ param })=> {
 
   return (
     <div>
-      <button type="button" className="bg-neutral-700 py-2 px-6 font-bold text-slate-200 rounded-full hover:bg-black mt-4" onClick={() => setAddpage("add")}>+Add Your Insta Page</button>
+      <button type="button" className="bg-neutral-700 py-2 px-4 font-bold text-slate-100 rounded-lg hover:bg-black mt-4" onClick={() => setAddpage("add")}>+Add Your New Insta Page</button>
        
       {addpage?<div className='border-2 border-neutral-500 rounded-3xl p-6 mt-8 w-10/12'>
         <h3 className='mt-8 mb-2 font-bold text-2xl text-neutral-800'>Your User Id</h3>

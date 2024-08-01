@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Link from 'next/link';
+import AddInstaPage from './AddInstaPage';
 interface InstaPagesOfProfile {
     param: string; // Assuming param is a string, change type as per your requirement
   }
@@ -27,11 +28,11 @@ const InstaPagesOfProfile: React.FC<InstaPagesOfProfile> = async({ param })=> {
   return (
     <div >
     {pages ?
-      <div className='width-full  p-3 pl-4 mt-2 mb-6'>
-        <h2 className='text-2xl flex justify-center font-bold'>Your Insta Pages</h2>
-        <Table className='mt-2 bg-gray-400'>
+      <div className='width-full  p-3 pl-4 mt-10 mb-6'>
+        <h2 className='flex justify-center text-5xl font-bold'>Your Insta Pages</h2>
+        <Table className='mt-4 bg-gray-400'>
       
-      <TableHeader className='bg-gray-700'>
+      <TableHeader className='bg-neutral-700'>
         <TableRow>
           <TableHead className="text-gray-100 font-semibold">Page User Name</TableHead>
           <TableHead className="text-gray-100 font-semibold">Full Name</TableHead>
@@ -55,6 +56,9 @@ const InstaPagesOfProfile: React.FC<InstaPagesOfProfile> = async({ param })=> {
             
           </TableRow>
         ))}
+        <TableRow>
+        <TableCell colSpan={7}><AddInstaPage param={param} /></TableCell>
+          </TableRow>
       </TableBody>
     </Table>
         

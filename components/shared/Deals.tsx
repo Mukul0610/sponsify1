@@ -49,10 +49,10 @@ const Deals: React.FC<DealsProps> = ({ dealId,userId, pageId, sponId }) => {
   const handleSubmite = async (e: string, post: string, day: number, views: number, amountRemaining: number, price: number, userName: string, biolinks: string) => {
     setVerify(true)
     try {
-      // Fetch data from the API
+      // Fetch data from the API https://pythonapi-2fhr.onrender.com/process?reel_url=${post}&input_image_path=${e}
       const response = await fetch(`https://pythonapi-2fhr.onrender.com/process?reel_url=${post}&input_image_path=${e}`);
       const maindata = await response.json();
-
+      
       if (maindata) {
         // Prepare data for the new post
         const data = {
@@ -77,7 +77,7 @@ const Deals: React.FC<DealsProps> = ({ dealId,userId, pageId, sponId }) => {
         setPost("")
         // Refresh the router to reflect changes
       } else {
-        alert("Sorry, something went wrong with your post.")
+        alert("Sorry, something is wrong with your post.")
       }
     } catch (error) {
       alert(error);

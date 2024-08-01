@@ -17,7 +17,7 @@ const Home = () => {
 
       <SignedOut>
         <div>
-          <UserButton/>
+        <UserButton/>
         </div>
       </SignedOut>
     </div>

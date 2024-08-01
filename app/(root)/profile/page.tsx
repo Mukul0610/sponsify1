@@ -11,7 +11,7 @@ import { getDealByUserId } from '@/lib/actions/deal.action';
 import InstaPagesOfProfile from '@/components/shared/InstaPagesOfProfile';
 import AllDeals from '@/components/shared/AllDeals';
 import AllCampaign from '@/components/shared/AllCampaign';
-import Pyment from '@/components/shared/Pyment';
+import Payment from '@/components/shared/Payment';
 
 
 const profile = async () => {
@@ -33,18 +33,21 @@ const profile = async () => {
             <Image src={user.photo} alt="coins" width={100} height={100} className="rounded-full" />
             <p className='mt-2 text-center font-bold"'>{user.username}</p>
           </div >
-          <h3 className="mt-5 font-bold">CREDITS AVAILABLE</h3>
-          <div className='flex flex-col lg:flex-row lg:justify-between'>
-            <div className="mt-4 flex  items-center gap-4">
+
+          <div className='p-8 bg-neutral-700 m-4 rounded-3xl shadow-xl shadow-gray-800'>
+          <h3 className="mt-5 font-bold text-white text-3xl">CREDITS AVAILABLE</h3>
+          <div className='flex flex-col lg:justify-between'>
+            <div className="mt-10 mb-10 flex  items-center gap-4 text-white">
               <Image src="/assets/icons/coins.svg" alt="coins" width={50} height={50} className="size-9 md:size-12" />
               <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
             </div>
-            <Pyment/>
+            <Payment/>
+          </div>
           </div>
 
 
           <InstaPagesOfProfile param={id} />
-          <AddInstaPage param={id} />
+          
           <AllDeals param={id} />
           <AllCampaign param={id} />
         </div>
