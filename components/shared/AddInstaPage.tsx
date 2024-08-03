@@ -77,7 +77,7 @@ const AddInstaPage: React.FC<AddInstaPageProps> = ({ param })=> {
 
   useEffect(() => {
     if (count !== "") {
-      fetch(`https://pythonapi-2fhr.onrender.com/${count}`)
+      fetch(`https://pythonapi-pimk.onrender.com/${count}`)
         .then((response) => response.json())
         .then((maindata) => {
           setData({
