@@ -1,5 +1,5 @@
-import { deleteInstaPage, getInstaPageByUserId } from '@/lib/actions/instaPage.action';
-import React from 'react'
+import { deleteInstaPage, getAllInstaPageToUpdate, getInstaPageByUserId, updateOnePage } from '@/lib/actions/instaPage.action';
+import React, { useEffect } from 'react'
 import { numToString } from './funtions';
 import { useRouter } from 'next/navigation';
 import DeleatInstaPage from './DeleatInstaPage';
@@ -21,6 +21,44 @@ interface InstaPagesOfProfile {
   
 
 const InstaPagesOfProfile: React.FC<InstaPagesOfProfile> = async({ param })=> {
+
+
+   
+    const updateData = async () => {
+      const pages = await  getAllInstaPageToUpdate(param);
+      if(pages[0].pageUserName){
+        for(let i=0;i<pages.length;i++){
+          try{
+          const response = await fetch(`https://pythonapi-pimk.onrender.com/${pages[i].pageUserName}`);
+          const maindata = await response.json();
+          if(maindata){
+            const data={
+            pageUserName: maindata.username,
+            full_name: maindata.full_name,
+            followers: maindata.followers,
+            following: maindata.following,
+            media_count: maindata.media_count,
+            bio: maindata.bio,
+            average_views: maindata.average_views,
+            profile_pic_url: maindata.profile_pic_url,
+            timeOfUpdate: new Date(Date.now() + 3* 24 * 60 * 60 * 1000),
+            }
+
+
+            await updateOnePage(pages[i]._id,data)
+          }
+        }catch(err) {
+          console.log(err)
+        }
+        }
+      }
+     
+    }
+    updateData()
+
+
+  
+
   
     const pages = await getInstaPageByUserId(param);
 

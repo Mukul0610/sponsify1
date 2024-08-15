@@ -22,7 +22,7 @@ const LandingPage = () => {
               SPON<span className="text-red-600">SIFY</span>
             </p>
           </Link>
-          <Button asChild className='bg-white h-10 text-xl text-gray-900 font-bold '>
+          <Button asChild className='bg-white h-10 text-xl text-gray-900 font-bold hover:bg-slate-100 '>
             <Link href='/sign-in'>
               Login | Signup
             </Link>
