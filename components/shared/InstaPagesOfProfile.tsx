@@ -24,37 +24,37 @@ const InstaPagesOfProfile: React.FC<InstaPagesOfProfile> = async({ param })=> {
 
 
    
-    const updateData = async () => {
-      const pages = await  getAllInstaPageToUpdate(param);
-      if(pages[0].pageUserName){
-        for(let i=0;i<pages.length;i++){
-          try{
-          const response = await fetch(`https://pythonapi-pimk.onrender.com/${pages[i].pageUserName}`);
-          const maindata = await response.json();
-          if(maindata){
-            const data={
-            pageUserName: maindata.username,
-            full_name: maindata.full_name,
-            followers: maindata.followers,
-            following: maindata.following,
-            media_count: maindata.media_count,
-            bio: maindata.bio,
-            average_views: maindata.average_views,
-            profile_pic_url: maindata.profile_pic_url,
-            timeOfUpdate: new Date(Date.now() + 3* 24 * 60 * 60 * 1000),
-            }
+    // const updateData = async () => {
+    //   const pages = await  getAllInstaPageToUpdate(param);
+    //   if(pages[0].pageUserName){
+    //     for(let i=0;i<pages.length;i++){
+    //       try{
+    //       const response = await fetch(`https://pythonapi-pimk.onrender.com/${pages[i].pageUserName}`);
+    //       const maindata = await response.json();
+    //       if(maindata){
+    //         const data={
+    //         pageUserName: maindata.username,
+    //         full_name: maindata.full_name,
+    //         followers: maindata.followers,
+    //         following: maindata.following,
+    //         media_count: maindata.media_count,
+    //         bio: maindata.bio,
+    //         average_views: maindata.average_views,
+    //         profile_pic_url: maindata.profile_pic_url,
+    //         timeOfUpdate: new Date(Date.now() + 3* 24 * 60 * 60 * 1000),
+    //         }
 
 
-            await updateOnePage(pages[i]._id,data)
-          }
-        }catch(err) {
-          console.log(err)
-        }
-        }
-      }
+    //         await updateOnePage(pages[i]._id,data)
+    //       }
+    //     }catch(err) {
+    //       console.log(err)
+    //     }
+    //     }
+    //   }
      
-    }
-    updateData()
+    // }
+    // updateData()
 
 
   
